@@ -5,40 +5,36 @@
       :color="totatProfit >= 0 ? 'lime accent-3' : 'red accent-3'"
       class="px-4 mb-2 d-flex justify-space-between"
     >
-      <h2>{{ currUser.name }}</h2>
-      <h2>{{ totatProfit }}</h2>
+      <h2 v-if="currUser" class="font-rc">{{ currUser.name }}</h2>
+      <h2 class="font-rc">{{ totatProfit }}</h2>
     </v-card>
     <v-divider></v-divider>
     <div>
       <h2 class="text-center font-rc">Transfer History</h2>
       <v-divider></v-divider>
-      <v-sheet color="grey lighten-4" class="pa-3 mt-2" v-if="!transferReady">
-        <v-skeleton-loader class="mx-auto" type="paragraph"></v-skeleton-loader>
-      </v-sheet>
-      <v-data-iterator :items="userTransfers" class="mt-2" v-else>
+      <v-data-iterator :items="transfer" class="mt-2" v-if="currUser">
         <template v-slot:default="props">
           <v-row>
             <v-col
               v-for="item in props.items"
               :key="item.id"
               cols="12"
-              lg="6"
               class="pa-0"
             >
               <v-card class="pa-2" tile dark>
                 <div
                   class="d-flex justify-space-between px-2 font-rc"
                   :class="
-                    item.from === currUser.id
+                    item.transaction[0] === currUser.id
                       ? 'lime accent-3 black--text'
                       : 'red accent-3'
                   "
                 >
                   <h3>
-                    {{ getName(item.from) }}
+                    {{ getName(item.transaction[0]) }}
                   </h3>
                   <h3>
-                    {{ getName(item.to) }}
+                    {{ getName(item.transaction[1]) }}
                   </h3>
                   <h3>
                     {{ item.amount }}
@@ -60,54 +56,37 @@
 </template>
 
 <script>
-import { db } from "@/firebase/init.js";
 import { mapGetters } from "vuex";
 import moment from "moment";
 export default {
   name: "Logs",
-  data() {
-    return {
-      search: "",
-      transfer: []
-    };
-  },
   computed: {
     ...mapGetters([
       "getUsers",
-      "currUser"
+      "currUser",
+      "transfer"
       // ...
     ]),
-    userTransfers() {
-      if (this.transfer) {
-        return this.transfer.filter(t => {
-          return t.from === this.currUser.id || t.to === this.currUser.id;
-        });
-      }
-      return null;
-    },
     transferReady() {
-      return this.userTransfers.length !== 0 ? true : false;
+      return this.transfer.length !== 0 ? true : false;
     },
     totatProfit() {
-      if (this.transfer) {
+      if (this.currUser && this.transfer) {
         return (
           this.transfer
             .filter(t => {
-              return t.from === this.currUser.id;
+              return t.transaction[0] === this.currUser.id;
             })
             .reduce((a, { amount }) => a + amount, 0) -
           this.transfer
             .filter(t => {
-              return t.to === this.currUser.id;
+              return t.transaction[1] === this.currUser.id;
             })
             .reduce((a, { amount }) => a + amount, 0)
         );
       }
       return 0;
     }
-  },
-  firestore: {
-    transfer: db.collection("transfer").orderBy("timestamp", "desc")
   },
   methods: {
     getName(userId) {

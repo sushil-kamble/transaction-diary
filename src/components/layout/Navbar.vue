@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="primary" dense dark app>
+    <v-app-bar color="blue accent-4" dense dark app>
       <v-toolbar-title>
         <router-link
           :to="{ name: 'Home' }"
@@ -11,9 +11,6 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <!-- <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn> -->
       <div v-if="isLoggedIn">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -31,7 +28,7 @@
           <v-list>
             <v-list-item>
               <v-list-item-title>
-                <v-btn x-small :to="{ name: 'Home' }">
+                <v-btn x-small text :to="{ name: 'Home' }">
                   Profile
                 </v-btn>
               </v-list-item-title>

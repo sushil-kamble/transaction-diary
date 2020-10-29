@@ -99,7 +99,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db } from "@/firebase/init.js";
+import { db, firebase } from "@/firebase/init.js";
 export default {
   name: "Transfer",
   data() {
@@ -191,8 +191,10 @@ export default {
       ) {
         db.collection("transfer")
           .add({
-            from: this.senderId,
-            to: this.receiverId,
+            transaction: firebase.firestore.FieldValue.arrayUnion(
+              this.senderId,
+              this.receiverId
+            ),
             description: this.description.slice(0, 31),
             amount: Number(this.amount),
             timestamp: Date.now()

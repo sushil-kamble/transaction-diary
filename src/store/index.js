@@ -7,11 +7,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    users: null
+    users: null,
+    transfer: null
   },
   getters: {
     getUsers: state => {
       return state.users;
+    },
+    transfer: state => {
+      return state.transfer;
     },
     currUser: state => {
       if (state.users) {
@@ -35,10 +39,27 @@ export default new Vuex.Store({
       // we return the promise returned by `bindFirestoreRef` that will
       // resolve once data is ready
       if (auth.currentUser) {
+        context.dispatch("bindTransactions");
         return context.bindFirestoreRef("users", db.collection("users"));
       } else {
         context.unbindFirestoreRef("users");
         context.commit("RESET_USER", null);
+        return null;
+      }
+    }),
+    bindTransactions: firestoreAction(context => {
+      if (auth.currentUser) {
+        return context.bindFirestoreRef(
+          "transfer",
+          db
+            .collection("transfer")
+            .where("transaction", "array-contains", auth.currentUser.uid)
+            .orderBy("timestamp", "desc")
+        );
+      } else {
+        context.unbindFirestoreRef("transfer");
+        context.commit("RESET_USER", null);
+        return null;
       }
     })
   },
