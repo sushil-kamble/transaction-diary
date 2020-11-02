@@ -1,6 +1,6 @@
 <template>
   <!-- primary-font, color: secondaryis -->
-  <v-card class="pa-4 py-12 mt-12" tile>
+  <v-card class="pa-4 py-12 mt-12" tile dark>
     <h1 class="primary-font text-center">Login</h1>
     <v-form @submit.prevent="login" autocomplete="off">
       <v-text-field
@@ -26,10 +26,10 @@
       <v-btn
         type="submit"
         color="secondary"
-        class="primary-font rounded-b-pill"
+        class="font-ub"
         :loading="loading"
         block
-        >Submit</v-btn
+        >LOGIN</v-btn
       >
     </v-form>
   </v-card>

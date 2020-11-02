@@ -1,7 +1,7 @@
 <template>
-  <v-list v-if="incomingRequest.length !== 0">
-    <h2 class="font-rc">Friends Requests</h2>
-    <v-card class="mt-1">
+  <div v-if="incomingRequest">
+    <h2 class="font-ub ml-2 white--text">Friends Requests</h2>
+    <v-card class="mt-1" v-if="incomingRequest.length !== 0" dark>
       <v-list-item v-for="(user, j) in incomingRequest" :key="j">
         <v-list-item-avatar>
           <v-icon class="grey lighten-1" dark>
@@ -14,9 +14,10 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn-toggle>
+          <v-item-group>
             <v-btn
               small
+              class="mr-2"
               @click="
                 loading2 = true;
                 index = j;
@@ -30,11 +31,14 @@
             <v-btn small @click="rejectRequest(user.from)" color="error">
               Reject
             </v-btn>
-          </v-btn-toggle>
+          </v-item-group>
         </v-list-item-action>
       </v-list-item>
     </v-card>
-  </v-list>
+    <div v-else>
+      <h4 class="font-rc grey--text ml-2">No Friend Request</h4>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <!-- primary-font -->
-  <v-card class="pa-4 py-12" tile>
+  <v-card class="pa-4 py-12" tile dark>
     <h1 class="primary-font text-center">Register</h1>
     <v-form @submit.prevent="registed" autocomplete="off">
       <v-text-field
@@ -42,10 +42,10 @@
       <v-btn
         type="submit"
         color="secondary"
-        class="primary-font rounded-b-pill"
+        class="font-ub"
         :loading="loading"
         block
-        >Submit</v-btn
+        >Register</v-btn
       >
     </v-form>
   </v-card>
@@ -96,7 +96,7 @@ export default {
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(() => {
             this.feedback = "Account Created Successfully";
-            this.$router.push({ name: "Home" });
+            this.$router.replace({ name: "Home" });
             db.collection("users")
               .doc(auth.currentUser.uid)
               .set({

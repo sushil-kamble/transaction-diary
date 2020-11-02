@@ -59,8 +59,9 @@ const routes = [
     }
   },
   {
-    path: "/friends/:id",
+    path: "/friends/",
     name: "Friend",
+    props: true,
     component: () =>
       import(/* webpackChunkName: "perFriend" */ "../views/Friend.vue"),
     meta: {

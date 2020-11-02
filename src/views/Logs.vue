@@ -5,14 +5,21 @@
       :color="totatProfit >= 0 ? 'lime accent-3' : 'red accent-3'"
       class="px-4 mb-2 d-flex justify-space-between"
     >
-      <h2 v-if="currUser" class="font-rc">{{ currUser.name }}</h2>
-      <h2 class="font-rc">{{ totatProfit }}</h2>
+      <h1 v-if="currUser" class="font-ub">{{ currUser.name }}</h1>
+      <h1 class="font-ub">{{ totatProfit }}</h1>
     </v-card>
-    <v-divider></v-divider>
-    <div>
-      <h2 class="text-center font-rc">Transfer History</h2>
+    <v-divider dark></v-divider>
+    <div class="mt-2">
+      <h2 class="font-ub white--text">Transfer History</h2>
       <v-divider></v-divider>
-      <v-data-iterator :items="transfer" class="mt-2" v-if="currUser">
+      <v-data-iterator
+        :items="transfer"
+        class="mt-2"
+        v-if="currUser"
+        disable-pagination
+        disable-filtering
+        hide-default-footer
+      >
         <template v-slot:default="props">
           <v-row>
             <v-col
@@ -23,7 +30,7 @@
             >
               <v-card class="pa-2" tile dark>
                 <div
-                  class="d-flex justify-space-between px-2 font-rc"
+                  class="d-flex justify-space-between px-2 font-ub"
                   :class="
                     item.transaction[0] === currUser.id
                       ? 'lime accent-3 black--text'
@@ -40,8 +47,8 @@
                     {{ item.amount }}
                   </h3>
                 </div>
-                <div class="d-flex justify-space-between px-2 font-rc">
-                  <span class="grey--text font-italic">
+                <div class="d-flex justify-space-between px-2 font-ub">
+                  <span class="grey--text">
                     {{ item.description }}
                   </span>
                   <h6>{{ getTime(item.timestamp) }}</h6>

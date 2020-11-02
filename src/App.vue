@@ -8,9 +8,9 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    <!-- Bottom Navigation -->
-    <Bottom />
-    <!-- Bottom Navigation -->
+    <v-footer>
+      <Bottom />
+    </v-footer>
   </v-app>
 </template>
 
@@ -27,11 +27,14 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Ubuntu&display=swap");
 #app {
-  background-color: lightcyan;
+  background-color: #263238;
 }
 .font-rc {
   font-family: "Roboto Condensed", sans-serif;
+}
+.font-ub {
+  font-family: "Ubuntu", sans-serif;
 }
 </style>

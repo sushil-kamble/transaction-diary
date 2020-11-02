@@ -1,6 +1,6 @@
 <template>
   <div v-if="currUser">
-    <v-card class="pa-3 mt-2" color="transparent">
+    <v-card class="mt-2" color="transparent">
       <v-form autocomplete="off" @submit.prevent="addTran">
         <v-select
           :items="friends"
@@ -11,7 +11,8 @@
               ? 'Sender And Receiver can\'t be same'
               : ''
           "
-          solo
+          solo-inverted
+          dark
         ></v-select>
         <v-select
           :items="friends"
@@ -22,26 +23,29 @@
               : ''
           "
           label="Receiver"
-          solo
+          solo-inverted
+          dark
         ></v-select>
         <v-text-field
           type="number"
           label="Amount"
           v-model="amount"
-          solo
+          solo-inverted
           dense
+          dark
         ></v-text-field>
         <v-text-field
           label="Description"
           v-model="description"
           counter="30"
-          solo
+          solo-inverted
+          dark
           dense
         ></v-text-field>
         <v-btn
           block
           type="submit"
-          color="primary"
+          color="secondary"
           dark
           @click="loading = true"
           :loading="loading"
@@ -80,16 +84,21 @@
         </h4>
       </div>
     </v-card>
-    <v-card v-else class="pa-3 mt-2 red darken-4">
-      <h5 class="text-center font-rc white--text">
+    <v-card v-else class="pa-3 mt-2">
+      <h5 class="text-center font-ub">
         All Fields are required, {{ this.currUser.name }}(You) should be a
         Sender or a Receiver and Sender and Receiver Should not be same
       </h5>
     </v-card>
-    <v-snackbar v-model="snackbar" timeout="7000" color="success">
-      {{ snackbarText }}
+    <v-snackbar v-model="snackbar" color="lime accent-3" timeout="7000">
+      <h5 class="black--text font-ub">{{ snackbarText }}</h5>
       <template v-slot:action="{ attrs }">
-        <v-btn dark text v-bind="attrs" @click="snackbar = false">
+        <v-btn
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+          class="black--text"
+        >
           Close
         </v-btn>
       </template>
@@ -194,6 +203,10 @@ export default {
             transaction: firebase.firestore.FieldValue.arrayUnion(
               this.senderId,
               this.receiverId
+            ),
+            connection: firebase.firestore.FieldValue.arrayUnion(
+              this.senderId + "-" + this.receiverId,
+              this.receiverId + "-" + this.senderId
             ),
             description: this.description.slice(0, 31),
             amount: Number(this.amount),

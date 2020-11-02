@@ -2,6 +2,9 @@
   <div>
     <!-- Friend Requests -->
     <FriendRequests />
+
+    <v-divider class="my-2" dark></v-divider>
+
     <!-- Available Friends -->
     <AvailableUsers />
   </div>

@@ -10,17 +10,17 @@
     >
       <v-list-item three-line>
         <v-list-item-content>
-          <v-list-item-title class="headline mb-1 font-rc">
-            {{ menu.title }}
+          <v-list-item-title class="mb-1 font-ub">
+            <h3>{{ menu.title }}</h3>
           </v-list-item-title>
-          <v-list-item-subtitle>
+          <v-list-item-subtitle class="font-rc">
             {{ menu.description }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
       <v-card-actions>
-        <v-btn block :to="{ name: menu.link }">
+        <v-btn block :to="{ name: menu.link }" class="font-rc">
           {{ menu.buttonText }}
         </v-btn>
       </v-card-actions>
@@ -41,21 +41,21 @@ export default {
           description: "Add Transaction between you and other person",
           buttonText: "Add Trasaction",
           link: "Transfer",
-          color: "blue darken-1"
+          color: "blue-grey"
         },
         {
           title: "Your Logs",
           description: "See your Transaction histoy",
           buttonText: "See Logs",
           link: "Logs",
-          color: "deep-orange accent-3"
+          color: "blue-grey darken-1"
         },
         {
           title: "Your Friends",
           description: "See your transaction history wrt your friend",
           buttonText: "Friends",
           link: "Friends",
-          color: "purple darken-3"
+          color: "blue-grey darken-2"
         },
         {
           title: "Find Friends",

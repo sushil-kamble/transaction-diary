@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     users: null,
-    transfer: null
+    transfer: null,
+    makeNull: null
   },
   getters: {
     getUsers: state => {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     transfer: state => {
       return state.transfer;
+    },
+    getMakeNull: state => {
+      return state.makeNull;
     },
     currUser: state => {
       if (state.users) {
@@ -40,6 +44,7 @@ export default new Vuex.Store({
       // resolve once data is ready
       if (auth.currentUser) {
         context.dispatch("bindTransactions");
+        context.dispatch("bindMakeNullRequestTo");
         return context.bindFirestoreRef("users", db.collection("users"));
       } else {
         context.unbindFirestoreRef("users");
@@ -61,6 +66,14 @@ export default new Vuex.Store({
         context.commit("RESET_USER", null);
         return null;
       }
+    }),
+    bindMakeNullRequestTo: firestoreAction(context => {
+      return context.bindFirestoreRef(
+        "makeNull",
+        db
+          .collection("makeNull")
+          .where("connection", "array-contains", auth.currentUser.uid)
+      );
     })
   },
   modules: {}

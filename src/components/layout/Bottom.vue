@@ -1,12 +1,13 @@
 <template>
   <v-bottom-navigation
-    class="pt-1"
-    app
+    class="pt-2"
     dark
     shift
+    app
     grow
     v-model="value"
     :background-color="color"
+    v-if="currUser"
   >
     <v-btn :to="{ name: 'Transfer' }">
       <span class="pt-2 font-rc text-uppercase">Transfer</span>
@@ -35,20 +36,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({ value: 0 }),
 
   computed: {
+    ...mapGetters(["currUser"]),
     color() {
       switch (this.value) {
         case 0:
-          return "blue darken-1";
+          return "grey darken-1";
         case 1:
-          return "deep-orange accent-3";
+          return "grey darken-2";
         case 2:
-          return "purple darken-3";
+          return "grey darken-3";
         case 3:
-          return "blue-grey darken-3";
+          return "grey darken-4";
         default:
           return "primary";
       }
